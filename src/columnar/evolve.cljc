@@ -25,7 +25,11 @@
   Two files agree if their columns canonicalise to the same class. Within a
   class the wider concrete type wins — `int64` over `int32`, `double` over
   `float` — and since both readers already produce Clojure numbers, that
-  widening is a **relabelling and not a conversion**. Across classes there is
+  widening is a **relabelling and not a conversion**. Equal widths are ties
+  between *aliases* (`:utf8` and `:byte-array` are the same class and the same
+  size), and a tie goes to the first schema given: deterministic is the
+  property that matters, and there is no principled winner between two names
+  for one thing. Across classes there is
   no safe answer: `int` and `float` differ past 2^53, `string` and `int` do
   not compare, and guessing would put wrong values into a query that looks
   like it worked. Those are refused and the refusal names both types.
