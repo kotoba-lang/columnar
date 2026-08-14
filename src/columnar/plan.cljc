@@ -70,16 +70,19 @@
 (defn select
   "`scan` shaped for `kotobase.lake.tabular/ITabularEngine`.
 
-  `request` is `{:columns [..] :row n-or-nil :filters [[col value] ..]}`.
-  Equality filters become `[:= col v]` predicates, and a bound row becomes a
-  row-number restriction — which prunes chunks too, because a row number
-  names a chunk.
+  `request` is `{:columns [..] :row n-or-nil :filters [[col value] ..]
+  :predicates [[op col v] ..]}`.
+  Equality filters become `[:= col v]` predicates and are concatenated
+  with `:predicates` so a value interval can prune via `columnar.stats`.
+  A bound row becomes a row-number restriction — which prunes chunks too,
+  because a row number names a chunk.
 
   Kept here rather than in the consumer so the translation has one home,
   and dependency-free: the row key travels as an argument rather than this
   library depending on the namespace that owns it."
-  [source {:keys [columns row filters]} row-key]
-  (let [preds (mapv (fn [[c v]] [:= c v]) filters)
+  [source {:keys [columns row filters predicates]} row-key]
+  (let [preds (into (mapv (fn [[c v]] [:= c v]) (or filters []))
+                    (or predicates []))
         {:keys [rows] :as result} (scan source {:columns columns
                                                 :predicates preds
                                                 :row-key row-key})]
