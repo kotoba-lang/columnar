@@ -177,4 +177,15 @@
                                       ::row)]
       (is (= [{::row 8 "price" 230}] rows)
           "chunk 2's third row is row 8 even though chunks 0 and 1 were never
-           read — row numbering comes from metadata, not from counting reads"))))
+           read — row numbering comes from metadata, not from counting reads")))
+  (testing "range predicates prune the same way as equality"
+    (let [c (src/counting (mem-source chunks))
+          {:keys [rows]} (plan/select (:source c)
+                                      {:columns ["price"] :row nil
+                                       :filters []
+                                       :predicates [[:>= "price" 100] [:< "price" 200]]}
+                                      ::row)]
+      (is (= [{::row 3 "price" 110} {::row 4 "price" 120} {::row 5 "price" 130}]
+             rows))
+      (is (= #{1} (:chunks (src/read-counts c)))
+          "chunks whose min/max sit outside [100, 200) are not read"))))
