@@ -1,8 +1,14 @@
 (ns columnar.cljs-runner
+  "Compiled-ClojureScript half of the suite. The required namespaces here must
+  stay in step with test/run.cljs — see the note there for what a partial
+  runner costs and why it cannot be noticed from its output."
   (:require [clojure.test :as t]
-            [columnar.engine-test]))
+            [columnar.engine-test]
+            [columnar.evolve-test]
+            [columnar.group-test]))
 
 (defmethod t/report [::t/default :end-run-tests] [m]
   (when-not (t/successful? m) (js/process.exit 1)))
 
-(defn -main [& _] (t/run-tests 'columnar.engine-test))
+(defn -main [& _]
+  (t/run-tests 'columnar.engine-test 'columnar.evolve-test 'columnar.group-test))
