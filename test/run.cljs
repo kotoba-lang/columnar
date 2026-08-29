@@ -16,6 +16,7 @@
   `Ran 10 tests ... 0 failures` and exited 0. A runner that tests a third of
   the suite returns the same value as one that tests all of it."
   (:require [clojure.test :as t]
+            [columnar.bytes-test]
             [columnar.engine-test]
             [columnar.evolve-test]
             [columnar.group-test]))
@@ -23,4 +24,5 @@
 (defmethod t/report [::t/default :end-run-tests] [m]
   (when-not (t/successful? m) (js/process.exit 1)))
 
-(t/run-tests 'columnar.engine-test 'columnar.evolve-test 'columnar.group-test)
+(t/run-tests 'columnar.bytes-test 'columnar.engine-test
+             'columnar.evolve-test 'columnar.group-test)
