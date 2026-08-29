@@ -3,6 +3,7 @@
   stay in step with test/run.cljs — see the note there for what a partial
   runner costs and why it cannot be noticed from its output."
   (:require [clojure.test :as t]
+            [columnar.bytes-test]
             [columnar.engine-test]
             [columnar.evolve-test]
             [columnar.group-test]))
@@ -11,4 +12,5 @@
   (when-not (t/successful? m) (js/process.exit 1)))
 
 (defn -main [& _]
-  (t/run-tests 'columnar.engine-test 'columnar.evolve-test 'columnar.group-test))
+  (t/run-tests 'columnar.bytes-test 'columnar.engine-test
+               'columnar.evolve-test 'columnar.group-test))
