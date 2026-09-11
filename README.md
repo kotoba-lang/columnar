@@ -98,7 +98,7 @@ reasoning `datom-source` and `datalog` apply to themselves.
 
 ```sh
 clojure -M:test                                          # JVM
-nbb --classpath "src:test" test/run.cljs                 # cljs, interpreted
+nbb --classpath "src:test" test/run.cljk                 # cljs, interpreted
 clojure -M:cljs -m cljs.main --target node -m columnar.cljs-runner
 clojure -M:lint
 ```
