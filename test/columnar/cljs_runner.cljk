@@ -1,6 +1,6 @@
 (ns columnar.cljs-runner
   "Compiled-ClojureScript half of the suite. The required namespaces here must
-  stay in step with test/run.cljs — see the note there for what a partial
+  stay in step with test/run.cljk — see the note there for what a partial
   runner costs and why it cannot be noticed from its output."
   (:require [clojure.test :as t]
             [columnar.bytes-test]

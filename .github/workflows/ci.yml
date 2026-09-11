@@ -24,7 +24,7 @@ jobs:
       - run: npm install -g nbb
       - name: ClojureScript (nbb, interpreted)
         run: |
-          nbb --classpath "src:test" test/run.cljs
+          nbb --classpath "src:test" test/run.cljk
 
       # And under real compilation, which nbb's SCI interpretation cannot
       # stand in for.
