@@ -97,10 +97,10 @@ reasoning `datom-source` and `datalog` apply to themselves.
 ## Test
 
 ```sh
-clojure -M:test                                          # JVM
-nbb --classpath "src:test" test/run.cljk                 # cljs, interpreted
-clojure -M:cljs -m cljs.main --target node -m columnar.cljs-runner
-clojure -M:lint
+kbb -M:test                                          # JVM
+kbb --backend sci --classpath "src:test" test/run.cljk                 # cljs, interpreted
+kbb -M:cljs -m cljs.main --target node -m columnar.cljs-runner
+kbb -M:lint
 ```
 
 All of them, as CI runs them. The two ClojureScript runs are not duplicates of
