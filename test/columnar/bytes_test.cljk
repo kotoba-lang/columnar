@@ -30,11 +30,11 @@
 (deftest view-bounds-fail-closed
   (let [v (bytes/view [1 2 3])]
     (testing "index"
-      (is (thrown-with-msg? #?(:clj clojure.lang.ExceptionInfo :cljs js/Error)
+      (is (thrown-with-msg? js/Error
                             #"out of range"
                             (bytes/view-byte v 3))))
     (testing "slice"
-      (is (thrown-with-msg? #?(:clj clojure.lang.ExceptionInfo :cljs js/Error)
+      (is (thrown-with-msg? js/Error
                             #"out of range"
                             (bytes/view-slice v 2 4))))))
 
